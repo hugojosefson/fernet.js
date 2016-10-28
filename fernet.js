@@ -93,7 +93,7 @@ var fernet = function fernet(opts){
     return encrypted.ciphertext;
   }
 
-  this.decryptMessage = function(cipherText, encryptionKey, iv){
+  this.decryptMessage = function(cipherText, encryptionKey, iv, asBuffer){
     var encrypted = {};
     encrypted.key=encryptionKey;
     encrypted.iv=iv;
@@ -101,7 +101,7 @@ var fernet = function fernet(opts){
 
     var decrypted = AES.decrypt(encrypted, encryptionKey, {iv: iv});
 
-    return decrypted.toString(Utf8);
+    return asBuffer ? Buffer.from(decrypted.toString(Base64), 'base64') : decrypted.toString(Utf8);
   }
 
   this.timeBytes = timeBytes;
